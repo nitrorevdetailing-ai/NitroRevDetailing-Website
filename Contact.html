@@ -16,7 +16,6 @@
             font-style: normal;
         }
 
-        /* Layout base */
         html,
         body {
             height: 100%;
@@ -36,41 +35,20 @@
             flex: 1;
         }
 
-        /* === Unified NAV (Sporty chevrons) === */
+        /* NAV */
         nav.site-nav {
-            position: relative;
-            z-index: 10;
             display: flex;
             justify-content: center;
             gap: 25px;
-            background: transparent;
-            padding: 0;
             font-family: 'MainFont', Arial, sans-serif;
             font-size: 3rem;
             margin-top: 30px;
         }
 
         nav.site-nav a {
-            position: relative;
             color: #fff;
             text-decoration: none;
             padding: 0 15px;
-            border: none !important;
-        }
-
-        nav.site-nav a::after {
-            content: "›";
-            position: absolute;
-            right: -18px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #E10600;
-            font-size: 2rem;
-            text-shadow: 0 0 6px #E10600;
-        }
-
-        nav.site-nav a:last-child::after {
-            content: "";
         }
 
         nav.site-nav a:hover {
@@ -78,25 +56,261 @@
             color: #E10600;
         }
 
-        @media (max-width: 600px) {
-            nav.site-nav {
-                flex-direction: column;
-                gap: 8px;
-            }
-
-            nav.site-nav a::after {
-                display: none;
-            }
-        }
-
-        /* Brand images */
         img.logo {
             display: block;
             margin: 0 auto;
             width: 100%;
             max-width: 500px;
-            height: auto;
-            padding: 0;
+        }
+
+        /* Grid layout */
+        .comic-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 30px auto;
+            height: 90vh;
+        }
+
+        .col {
+            display: grid;
+            gap: 10px;
+            height: 100%;
+        }
+
+        .left-col {
+            grid-template-rows: 3fr 1fr;
+        }
+
+        .right-col {
+            grid-template-rows: 1fr 1fr;
+        }
+
+        .panel {
+            border: 6px solid #fff;
+            background: #111;
+            font-family: 'MainFont', Arial, sans-serif;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            box-shadow: 4px 4px 0 #E10600;
+            transition: 0.25s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .panel:hover {
+            transform: scale(1.03);
+            box-shadow: 5px 5px 0 #E10600, 0 0 6px #fff;
+            background: #1a1a1a;
+        }
+
+        /* ===== Contact Form ===== */
+        .contact-form-wrap {
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            text-align: left;
+        }
+
+        .contact-form-title {
+            font-family: 'MainFont', Arial, sans-serif;
+            font-size: 2rem;
+            margin: 0 0 10px;
+        }
+
+        .contact-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .contact-form .full {
+            grid-column: 1 / -1;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .field label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            color: #f2f2f2;
+        }
+
+        .input,
+        .textarea {
+            background: #0c0c0c;
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 10px 12px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 4px;
+            outline: none;
+        }
+
+        .input:focus,
+        .textarea:focus {
+            border-color: #E10600;
+            box-shadow: 0 0 6px #E10600;
+        }
+
+        .textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            grid-column: 1 / -1;
+            font-family: 'MainFont', Arial, sans-serif;
+            font-size: 1.2rem;
+            color: #000;
+            background: #fff;
+            border: none;
+            padding: 10px 18px;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background: #E10600;
+            color: #fff;
+        }
+
+        /* ===== Business Hours (Left 2) ===== */
+        .hours-wrap {
+            width: 100%;
+            padding: 18px 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            text-align: left;
+        }
+
+        .hours-title {
+            margin: 0;
+            font-size: 1.8rem;
+            line-height: 1;
+            letter-spacing: 1px;
+        }
+
+        .hours-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            row-gap: 8px;
+            column-gap: 12px;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: none;
+            font-size: 1rem;
+        }
+
+        .hours-grid .day {
+            color: #f7f7f7;
+        }
+
+        .hours-grid .time {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .hours-note {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            color: #cfcfcf;
+            opacity: 0.9;
+            margin-top: 4px;
+            text-transform: none;
+        }
+
+        @media (max-width: 800px) {
+            .comic-grid {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .contact-form {
+                grid-template-columns: 1fr;
+            }
+
+            .hours-title {
+                font-size: 1.6rem;
+            }
+
+            .hours-grid {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* ====== Right 1: Top-center, small flyers, no image borders ====== */
+        .stack-wrap {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            align-items: start;
+            /* top */
+            justify-items: center;
+            /* center horizontally */
+            padding-top: 12px;
+            /* space from top edge */
+            pointer-events: none;
+            /* keep panel hover effects */
+        }
+
+        .stack {
+            position: relative;
+            width: min(40%, 275px);
+            /* << much smaller overall; tweak %/px as desired */
+            aspect-ratio: 2 / 3;
+            /* portrait */
+        }
+
+        .stack-item {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 0 !important;
+            box-shadow: none !important;
+            cursor: pointer;
+            user-select: none;
+            pointer-events: auto;
+            transition: transform .25s ease, filter .25s ease;
+            top: 50%;
+            left: 50%;
+            /* anchor in center */
+            transform: translate(-50%, -50%);
+            /* center align */
+        }
+
+        /* Flyer A – slightly closer */
+        .stack-item.item-a {
+            transform: translate(-110%, -50%) rotate(-6deg);
+        }
+
+        /* Flyer B – stays centered */
+        .stack-item.item-b {
+            transform: translate(-50%, -50%) rotate(2.5deg);
+        }
+
+        /* Flyer C – slightly closer */
+        .stack-item.item-c {
+            transform: translate(10%, -50%) rotate(8deg);
+        }
+
+
+        .stack-item.is-top {
+            filter: brightness(1.05);
         }
 
         /* Footer */
@@ -130,9 +344,7 @@
 
         .footer-icons a:hover svg {
             fill: #ffffff;
-            /* White fill */
             filter: drop-shadow(0 0 6px #ffffff);
-            /* White glow */
         }
     </style>
 </head>
@@ -141,8 +353,7 @@
     <main>
         <img class="logo" src="Images/NitroRevdetailing.png" alt="Nitro Rev Detailing">
 
-        <!-- Unified nav -->
-        <nav class="site-nav" aria-label="Primary">
+        <nav class="site-nav">
             <a href="index.html">Home</a>
             <a href="Services.html">Services</a>
             <a href="Gallery.html">Gallery</a>
@@ -150,44 +361,160 @@
             <a href="Contact.html">Contact</a>
         </nav>
 
+        <div class="comic-grid">
+            <!-- LEFT COLUMN -->
+            <div class="col left-col">
+                <!-- Contact Form -->
+                <div class="panel panel-left-top is-form">
+                    <div class="contact-form-wrap">
+                        <h2 class="contact-form-title">Quick Contact</h2>
+                        <form class="contact-form" action="#" method="post">
+                            <div class="field">
+                                <label for="name">Name</label>
+                                <input class="input" type="text" id="name" name="name" placeholder="Your full name"
+                                    required>
+                            </div>
+                            <div class="field">
+                                <label for="phone">Phone</label>
+                                <input class="input" type="tel" id="phone" name="phone" placeholder="(555) 123-4567"
+                                    required>
+                            </div>
+                            <div class="field full">
+                                <label for="address">Address</label>
+                                <input class="input" type="text" id="address" name="address"
+                                    placeholder="Street, City, State ZIP">
+                            </div>
+
+                            <div class="field full">
+                                <label>Number of Cars</label>
+                                <div class="checkbox-group">
+                                    <label><input type="radio" name="cars" value="1"> 1</label>
+                                    <label><input type="radio" name="cars" value="2"> 2</label>
+                                    <label><input type="radio" name="cars" value="3"> 3</label>
+                                    <label><input type="radio" name="cars" value="4plus"> 4+</label>
+                                </div>
+                            </div>
+
+                            <div class="field full">
+                                <label>Car Type</label>
+                                <div class="checkbox-group">
+                                    <label><input type="checkbox" name="car_type" value="sedan"> Sedan</label>
+                                    <label><input type="checkbox" name="car_type" value="suv"> SUV</label>
+                                    <label><input type="checkbox" name="car_type" value="truck"> Truck</label>
+                                    <label><input type="checkbox" name="car_type" value="other"> Other</label>
+                                </div>
+                            </div>
+
+                            <div class="field full">
+                                <label for="message">Message</label>
+                                <textarea class="textarea" id="message" name="message"
+                                    placeholder="Your message..."></textarea>
+                            </div>
+
+                            <div class="field full">
+                                <label for="referral">How Did You Hear About Us?</label>
+                                <select class="input" id="referral" name="referral">
+                                    <option value="" disabled selected>Select an option</option>
+                                    <option value="instagram">Instagram</option>
+                                    <option value="tiktok">TikTok</option>
+                                    <option value="referral">Referral</option>
+                                    <option value="google">Google</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+
+                            <div class="field full">
+                                <label><input type="checkbox" name="newsletter" value="yes"> Subscribe to
+                                    Newsletter</label>
+                            </div>
+
+                            <button class="submit-btn" type="submit">Send</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Left 2: Business Hours -->
+                <div class="panel panel-left-bottom">
+                    <div class="hours-wrap" aria-labelledby="hours-title">
+                        <h2 id="hours-title" class="hours-title">Business Hours</h2>
+                        <div class="hours-grid" role="list">
+                            <div class="day" role="listitem">Mon–Fri</div>
+                            <div class="time">8:00 AM – 9:00 PM</div>
+                            <div class="day" role="listitem">Sat–Sun</div>
+                            <div class="time">6:00 AM – 10:00 PM</div>
+                        </div>
+                        <div class="hours-note">Open 7 days a week</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN -->
+            <div class="col right-col">
+                <!-- RIGHT 1: Image Stack -->
+                <div class="panel panel-right-top" aria-label="Photo stack">
+                    <div class="stack-wrap">
+                        <div class="stack" id="photoStack">
+                            <!-- Replace src paths with your images -->
+                            <img class="stack-item item-a" src="Flyer/Flyer2.png" alt="Detail 1" data-initial="1">
+                            <img class="stack-item item-b" src="Flyer/Flyer1.png" alt="Detail 2" data-initial="2">
+                            <img class="stack-item item-c" src="Flyer/Flyer3.png" alt="Detail 3" data-initial="3">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-right-bottom">Right 2</div>
+            </div>
+        </div>
     </main>
 
     <footer>
         <div class="footer-icons">
             <!-- Email -->
-            <a href="mailto:nitrorevdetailing@gmail.com" aria-label="Email">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-                    <path
-                        d="M112 128C85.5 128 64 149.5 64 176C64 191.1 71.1 205.3 83.2 214.4L291.2 370.4C308.3 383.2 331.7 383.2 348.8 370.4L556.8 214.4C568.9 205.3 576 191.1 576 176C576 149.5 554.5 128 528 128L112 128zM64 260L64 448C64 483.3 92.7 512 128 512L512 512C547.3 512 576 483.3 576 448L576 260L377.6 408.8C343.5 434.4 296.5 434.4 262.4 408.8L64 260z" />
-                </svg>
-            </a>
-
-            <!-- Instagram -->
-            <a href="https://www.instagram.com/nitrorevdetailing/" target="_blank" aria-label="Instagram">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-                    <path
-                        d="M320.3 205C256.8 204.8 205.2 256.2 205 319.7C204.8 383.2 256.2 434.8 319.7 435C383.2 435.2 434.8 383.8 435 320.3C435.2 256.8 383.8 205.2 320.3 205zM319.7 245.4C360.9 245.2 394.4 278.5 394.6 319.7C394.8 360.9 361.5 394.4 320.3 394.6C279.1 394.8 245.6 361.5 245.4 320.3C245.2 279.1 278.5 245.6 319.7 245.4zM413.1 200.3C413.1 185.5 425.1 173.5 439.9 173.5C454.7 173.5 466.7 185.5 466.7 200.3C466.7 215.1 454.7 227.1 439.9 227.1C425.1 227.1 413.1 215.1 413.1 200.3zM542.8 227.5C541.1 191.6 532.9 159.8 506.6 133.6C480.4 107.4 448.6 99.2 412.7 97.4C375.7 95.3 264.8 95.3 227.8 97.4C192 99.1 160.2 107.3 133.9 133.5C107.6 159.7 99.5 191.5 97.7 227.4C95.6 264.4 95.6 375.3 97.7 412.3C99.4 448.2 107.6 480 133.9 506.2C160.2 532.4 191.9 540.6 227.8 542.4C264.8 544.5 375.7 544.5 412.7 542.4C448.6 540.7 480.4 532.5 506.6 506.2C532.8 480 541 448.2 542.8 412.3C544.9 375.3 544.9 264.5 542.8 227.5zM495 452C487.2 471.6 472.1 486.7 452.4 494.6C422.9 506.3 352.9 503.6 320.3 503.6C287.7 503.6 217.6 506.2 188.2 494.6C168.6 486.8 153.5 471.7 145.6 452C133.9 422.5 136.6 352.5 136.6 319.9C136.6 287.3 134 217.2 145.6 187.8C153.4 168.2 168.5 153.1 188.2 145.2C217.7 133.5 287.7 136.2 320.3 136.2C352.9 136.2 423 133.6 452.4 145.2C472 153 487.1 168.1 495 187.8C506.7 217.3 504 287.3 504 319.9C504 352.5 506.7 422.6 495 452z" />
-                </svg>
-            </a>
-
-            <!-- TikTok -->
-            <a href="https://www.tiktok.com/@nitrorevdetailing" target="_blank" aria-label="TikTok">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-                    <path
-                        d="M544.5 273.9C500.5 274 457.5 260.3 421.7 234.7L421.7 413.4C421.7 446.5 411.6 478.8 392.7 506C373.8 533.2 347.1 554 316.1 565.6C285.1 577.2 251.3 579.1 219.2 570.9C187.1 562.7 158.3 545 136.5 520.1C114.7 495.2 101.2 464.1 97.5 431.2C93.8 398.3 100.4 365.1 116.1 336C131.8 306.9 156.1 283.3 185.7 268.3C215.3 253.3 248.6 247.8 281.4 252.3L281.4 342.2C266.4 337.5 250.3 337.6 235.4 342.6C220.5 347.6 207.5 357.2 198.4 369.9C189.3 382.6 184.4 398 184.5 413.8C184.6 429.6 189.7 444.8 199 457.5C208.3 470.2 221.4 479.6 236.4 484.4C251.4 489.2 267.5 489.2 282.4 484.3C297.3 479.4 310.4 469.9 319.6 457.2C328.8 444.5 333.8 429.1 333.8 413.4L333.8 64L421.8 64C421.7 71.4 422.4 78.9 423.7 86.2C426.8 102.5 433.1 118.1 442.4 131.9C451.7 145.7 463.7 157.5 477.6 166.5C497.5 179.6 520.8 186.6 544.6 186.6L544.6 274z" />
-                </svg>
-            </a>
-
-            <!-- Facebook -->
-            <a href="https://facebook.com" target="_blank" aria-label="Facebook">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
-                    <path
-                        d="M576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 440 146.7 540.8 258.2 568.5L258.2 398.2L205.4 398.2L205.4 320L258.2 320L258.2 286.3C258.2 199.2 297.6 158.8 383.2 158.8C399.4 158.8 427.4 162 438.9 165.2L438.9 236C432.9 235.4 422.4 235 409.3 235C367.3 235 351.1 250.9 351.1 292.2L351.1 320L434.7 320L420.3 398.2L351 398.2L351 574.1C477.8 558.8 576 450.9 576 320z" />
-                </svg>
-            </a>
+            <a href="mailto:nitrorevdetailing@gmail.com" aria-label="Email">Email</a>
+            <a href="https://www.instagram.com/nitrorevdetailing/" target="_blank" aria-label="Instagram">Instagram</a>
+            <a href="https://www.tiktok.com/@nitrorevdetailing" target="_blank" aria-label="TikTok">TikTok</a>
+            <a href="https://facebook.com" target="_blank" aria-label="Facebook">Facebook</a>
         </div>
         <p>&copy; 2025 NitroRev Detailing. All rights reserved.</p>
     </footer>
+
+    <!-- Click-to-front logic -->
+    <script>
+        (function () {
+            const stack = document.getElementById('photoStack');
+            if (!stack) return;
+
+            let zCounter = 3; // start above initial 1..3
+            const items = Array.from(stack.querySelectorAll('.stack-item'));
+
+            // Initialize z-indexes
+            items.forEach((img, i) => {
+                const base = parseInt(img.dataset.initial || (i + 1), 10);
+                img.style.zIndex = base;
+            });
+            setTopClass();
+
+            // Click to bring to front
+            items.forEach(img => {
+                img.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    zCounter += 1;
+                    img.style.zIndex = zCounter;
+                    setTopClass();
+                });
+            });
+
+            function setTopClass() {
+                let topImg = null, topZ = -Infinity;
+                items.forEach(img => {
+                    const z = parseInt(getComputedStyle(img).zIndex, 10) || 0;
+                    if (z > topZ) { topZ = z; topImg = img; }
+                    img.classList.remove('is-top');
+                });
+                if (topImg) topImg.classList.add('is-top');
+            }
+        })();
+    </script>
 </body>
 
 </html>
