@@ -35,35 +35,66 @@
             flex: 1;
         }
 
-        /* NAV */
-        nav.site-nav {
+        /***********************************NAV Bar**************************************************/
+        nav {
+            position: relative;
+            z-index: 10;
             display: flex;
             justify-content: center;
             gap: 25px;
-            font-family: 'MainFont', Arial, sans-serif;
+            background: transparent;
+            font-family: 'MainFont';
             font-size: 3rem;
-            margin-top: 30px;
         }
 
-        nav.site-nav a {
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            nav a::after {
+                display: none;
+            }
+        }
+
+        nav a {
+            position: relative;
             color: #fff;
             text-decoration: none;
             padding: 0 15px;
         }
 
-        nav.site-nav a:hover {
+        nav a::after {
+            content: "›";
+            position: absolute;
+            right: -18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #E10600;
+            font-size: 2rem;
+            text-shadow: 0 0 6px #E10600;
+        }
+
+        nav a:last-child::after {
+            content: "";
+        }
+
+        nav a:hover {
             text-decoration: underline;
             color: #E10600;
         }
 
+        /***********************************NAV Bar**************************************************/
+
         img.logo {
             display: block;
-            margin: 0 auto;
+            margin: 0 auto 30px;
             width: 100%;
             max-width: 500px;
         }
 
-        /* Grid layout */
+        /***********************************3 Grid Services***********************************/
         .comic-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -188,7 +219,7 @@
             color: #fff;
         }
 
-        /* ===== Business Hours (Left 2) ===== */
+        /* ===== Business Hours ===== */
         .hours-wrap {
             width: 100%;
             padding: 18px 22px;
@@ -252,27 +283,21 @@
             }
         }
 
-        /* ====== Right 1: Top-center, small flyers, no image borders ====== */
+        /* ====== Right 1 flyers ====== */
         .stack-wrap {
             position: absolute;
             inset: 0;
             display: grid;
             align-items: start;
-            /* top */
             justify-items: center;
-            /* center horizontally */
             padding-top: 12px;
-            /* space from top edge */
             pointer-events: none;
-            /* keep panel hover effects */
         }
 
         .stack {
             position: relative;
             width: min(40%, 275px);
-            /* << much smaller overall; tweak %/px as desired */
             aspect-ratio: 2 / 3;
-            /* portrait */
         }
 
         .stack-item {
@@ -288,32 +313,26 @@
             transition: transform .25s ease, filter .25s ease;
             top: 50%;
             left: 50%;
-            /* anchor in center */
             transform: translate(-50%, -50%);
-            /* center align */
         }
 
-        /* Flyer A – slightly closer */
         .stack-item.item-a {
             transform: translate(-110%, -50%) rotate(-6deg);
         }
 
-        /* Flyer B – stays centered */
         .stack-item.item-b {
             transform: translate(-50%, -50%) rotate(2.5deg);
         }
 
-        /* Flyer C – slightly closer */
         .stack-item.item-c {
             transform: translate(10%, -50%) rotate(8deg);
         }
-
 
         .stack-item.is-top {
             filter: brightness(1.05);
         }
 
-        /* Footer */
+        /***********************************Footer**************************************************/
         footer {
             font-family: 'Montserrat', sans-serif;
             font-size: 0.9rem;
@@ -345,6 +364,248 @@
         .footer-icons a:hover svg {
             fill: #ffffff;
             filter: drop-shadow(0 0 6px #ffffff);
+        }
+
+        /* subtle pulse used elsewhere */
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                filter: none;
+            }
+
+            50% {
+                transform: scale(1.05);
+                filter: drop-shadow(0 0 6px #E10600);
+            }
+        }
+
+        .bubble-svg .accent,
+        .bubble-svg .ribbon {
+            animation: pulse 1.8s ease-in-out infinite;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .bubble-svg .accent,
+            .bubble-svg .ribbon {
+                animation: none;
+            }
+        }
+
+        /* ===== RIGHT 2: Before/After Flip ===== */
+        .is-flip {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flip-card {
+            width: 94%;
+            margin: 0 auto;
+            aspect-ratio: 16 / 10;
+            perspective: 1200px;
+            cursor: default;
+        }
+
+        .flip-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform .9s cubic-bezier(.22, .61, .36, 1);
+        }
+
+        .flip-inner.is-flipped {
+            transform: rotateY(180deg);
+        }
+
+        .face {
+            position: absolute;
+            inset: 0;
+            backface-visibility: hidden;
+            border: 0;
+        }
+
+        .face img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: contrast(1.05) saturate(1.05);
+        }
+
+        .face-back {
+            transform: rotateY(180deg);
+        }
+
+        /* comic labels */
+        .tag {
+            position: absolute;
+            left: 16px;
+            bottom: 14px;
+            font-family: 'MainFont', 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            font-size: clamp(14px, 2.2vw, 22px);
+            color: #000;
+            background: #fff;
+            padding: 6px 12px;
+            border: 4px solid #000;
+            box-shadow: 3px 3px 0 #E10600;
+            letter-spacing: .5px;
+        }
+
+        .tag-after {
+            background: #E10600;
+            color: #fff;
+        }
+
+        /* gloss sweep on AFTER */
+        .face-back::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(115deg, transparent 45%, rgba(255, 255, 255, .55) 50%, transparent 55%);
+            transform: translateX(-120%);
+            transition: transform 1s ease;
+            pointer-events: none;
+        }
+
+        .flip-inner.is-flipped .face-back::after {
+            transform: translateX(120%);
+        }
+
+        /* Right 2 layout: car on top, button below */
+        .panel-right-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding-top: 12px;
+        }
+
+        /* ================= Comic burst button ================ */
+        .comic-btn {
+            --accent: #E10600;
+            position: relative;
+            border: none;
+            color: #000;
+            background: transparent;
+            font-family: 'MainFont', 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            font-size: 1.25rem;
+            padding: 14px 28px;
+            cursor: pointer;
+            outline: none;
+            transform: translateZ(0);
+            will-change: transform;
+        }
+
+        /* black outline burst */
+        .comic-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            transform: translate(4px, 4px);
+            background: #000;
+            clip-path: polygon(5% 10%, 12% 4%, 22% 10%, 32% 4%, 42% 10%, 52% 4%, 62% 10%, 72% 4%, 82% 10%, 90% 4%,
+                    95% 14%, 96% 26%, 98% 38%, 96% 50%, 98% 62%, 96% 74%, 95% 86%, 88% 96%, 78% 90%, 68% 96%,
+                    58% 90%, 48% 96%, 38% 90%, 28% 96%, 18% 90%, 10% 96%, 4% 86%, 2% 74%, 4% 62%, 2% 50%,
+                    4% 38%, 2% 26%, 4% 14%);
+            z-index: -2;
+        }
+
+        /* white filled burst (default) */
+        .comic-btn::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: #fff;
+            clip-path: polygon(5% 10%, 12% 4%, 22% 10%, 32% 4%, 42% 10%, 52% 4%, 62% 10%, 72% 4%, 82% 10%, 90% 4%,
+                    95% 14%, 96% 26%, 98% 38%, 96% 50%, 98% 62%, 96% 74%, 95% 86%, 88% 96%, 78% 90%, 68% 96%,
+                    58% 90%, 48% 96%, 38% 90%, 28% 96%, 18% 90%, 10% 96%, 4% 86%, 2% 74%, 4% 62%, 2% 50%,
+                    4% 38%, 2% 26%, 4% 14%);
+            box-shadow: 4px 4px 0 var(--accent);
+            z-index: -1;
+        }
+
+        /* continuous shake on hover (both layers) */
+        @keyframes btn-shake {
+            0% {
+                transform: translate(0, 0) rotate(0);
+            }
+
+            15% {
+                transform: translate(2px, -2px) rotate(-3deg);
+            }
+
+            30% {
+                transform: translate(-3px, 2px) rotate(3deg);
+            }
+
+            45% {
+                transform: translate(3px, 0) rotate(-4deg);
+            }
+
+            60% {
+                transform: translate(-2px, 1px) rotate(4deg);
+            }
+
+            75% {
+                transform: translate(2px, -1px) rotate(-3deg);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(0);
+            }
+        }
+
+        .comic-btn:hover {
+            transform: scale(1.02);
+            color: #fff;
+        }
+
+        .comic-btn:hover::after {
+            background: var(--accent);
+            box-shadow: 4px 4px 0 #fff;
+        }
+
+        .comic-btn:hover::before,
+        .comic-btn:hover::after {
+            animation: btn-shake .45s ease-in-out infinite;
+        }
+
+        /* PRESSED (“MAKE IT DIRTY”) = WHITE burst + black text (even on hover) */
+        .comic-btn[aria-pressed="true"] {
+            color: #000;
+        }
+
+        .comic-btn[aria-pressed="true"]::after {
+            background: #fff;
+            box-shadow: 4px 4px 0 var(--accent);
+        }
+
+        .comic-btn[aria-pressed="true"]:hover {
+            color: #000;
+            transform: scale(1.02);
+        }
+
+        .comic-btn[aria-pressed="true"]:hover::after {
+            background: #fff;
+            box-shadow: 4px 4px 0 var(--accent);
+        }
+
+        .comic-btn[aria-pressed="true"]:hover::before,
+        .comic-btn[aria-pressed="true"]:hover::after {
+            animation: btn-shake .45s ease-in-out infinite;
+        }
+
+        /* Mobile sizing */
+        @media (max-width:800px) {
+            .comic-btn {
+                font-size: 1.05rem;
+                padding: 12px 22px;
+            }
         }
     </style>
 </head>
@@ -384,7 +645,6 @@
                                 <input class="input" type="text" id="address" name="address"
                                     placeholder="Street, City, State ZIP">
                             </div>
-
                             <div class="field full">
                                 <label>Number of Cars</label>
                                 <div class="checkbox-group">
@@ -394,7 +654,6 @@
                                     <label><input type="radio" name="cars" value="4plus"> 4+</label>
                                 </div>
                             </div>
-
                             <div class="field full">
                                 <label>Car Type</label>
                                 <div class="checkbox-group">
@@ -404,13 +663,11 @@
                                     <label><input type="checkbox" name="car_type" value="other"> Other</label>
                                 </div>
                             </div>
-
                             <div class="field full">
                                 <label for="message">Message</label>
                                 <textarea class="textarea" id="message" name="message"
                                     placeholder="Your message..."></textarea>
                             </div>
-
                             <div class="field full">
                                 <label for="referral">How Did You Hear About Us?</label>
                                 <select class="input" id="referral" name="referral">
@@ -422,12 +679,10 @@
                                     <option value="other">Other</option>
                                 </select>
                             </div>
-
                             <div class="field full">
                                 <label><input type="checkbox" name="newsletter" value="yes"> Subscribe to
                                     Newsletter</label>
                             </div>
-
                             <button class="submit-btn" type="submit">Send</button>
                         </form>
                     </div>
@@ -454,65 +709,121 @@
                 <div class="panel panel-right-top" aria-label="Photo stack">
                     <div class="stack-wrap">
                         <div class="stack" id="photoStack">
-                            <!-- Replace src paths with your images -->
                             <img class="stack-item item-a" src="Flyer/Flyer2.png" alt="Detail 1" data-initial="1">
                             <img class="stack-item item-b" src="Flyer/Flyer1.png" alt="Detail 2" data-initial="2">
                             <img class="stack-item item-c" src="Flyer/Flyer3.png" alt="Detail 3" data-initial="3">
                         </div>
+                        <g id="bubble-copy-C">
+                            <style>
+                                .ribbon {
+                                    fill: #E10600;
+                                    stroke: #000;
+                                    stroke-width: 6px;
+                                }
+
+                                .ribbon-text {
+                                    font-family: 'Montserrat', sans-serif;
+                                    font-weight: 800;
+                                    font-size: 20px;
+                                    fill: #fff;
+                                    text-transform: uppercase;
+                                }
+
+                                .h1 {
+                                    font-family: 'MainFont', 'Montserrat', sans-serif;
+                                    font-size: 46px;
+                                    text-transform: uppercase;
+                                    fill: #000;
+                                    paint-order: stroke;
+                                    stroke: #000;
+                                    stroke-width: 1.5px;
+                                }
+
+                                .sub {
+                                    font-family: 'Montserrat', sans-serif;
+                                    font-weight: 600;
+                                    font-size: 22px;
+                                    fill: #000;
+                                }
+                            </style>
+
+                            <!-- ribbon -->
+                            <g transform="translate(200,190)">
+                                <path class="ribbon" d="M0 20 L20 0 H400 L420 20 L400 40 H20 Z" />
+                                <text x="210" y="27" text-anchor="middle" class="ribbon-text">ENTER THE MONTHLY
+                                    RAFFLE</text>
+                            </g>
+
+                            <text x="400" y="260" text-anchor="middle" class="h1">FREE CAR WASH</text>
+                            <text x="400" y="305" text-anchor="middle" class="sub">Winner picked on the last day of each
+                                month</text>
+                        </g>
+
                     </div>
                 </div>
 
-                <div class="panel panel-right-bottom">Right 2</div>
+                <!-- RIGHT 2: Before/After Flip -->
+                <div class="panel panel-right-bottom is-flip" aria-label="Before and after detail">
+                    <div class="flip-card" id="beforeAfter">
+                        <div class="flip-inner">
+                            <figure class="face face-front">
+                                <img src="Before.png" alt="Car before detailing">
+                                <figcaption class="tag tag-before">BEFORE</figcaption>
+                            </figure>
+                            <figure class="face face-back">
+                                <img src="After.png" alt="Car after detailing">
+                                <figcaption class="tag tag-after">AFTER</figcaption>
+                            </figure>
+                        </div>
+                    </div>
+
+                    <!-- Comic button -->
+                    <button class="comic-btn" id="cleanBtn" aria-pressed="false">CLEAN ME!</button>
+                </div>
             </div>
         </div>
     </main>
-
-    <footer>
-        <div class="footer-icons">
-            <!-- Email -->
-            <a href="mailto:nitrorevdetailing@gmail.com" aria-label="Email">Email</a>
-            <a href="https://www.instagram.com/nitrorevdetailing/" target="_blank" aria-label="Instagram">Instagram</a>
-            <a href="https://www.tiktok.com/@nitrorevdetailing" target="_blank" aria-label="TikTok">TikTok</a>
-            <a href="https://facebook.com" target="_blank" aria-label="Facebook">Facebook</a>
-        </div>
-        <p>&copy; 2025 NitroRev Detailing. All rights reserved.</p>
-    </footer>
 
     <!-- Click-to-front logic -->
     <script>
         (function () {
             const stack = document.getElementById('photoStack');
             if (!stack) return;
-
-            let zCounter = 3; // start above initial 1..3
+            let zCounter = 3;
             const items = Array.from(stack.querySelectorAll('.stack-item'));
-
-            // Initialize z-indexes
-            items.forEach((img, i) => {
-                const base = parseInt(img.dataset.initial || (i + 1), 10);
-                img.style.zIndex = base;
-            });
+            items.forEach((img, i) => { const base = parseInt(img.dataset.initial || (i + 1), 10); img.style.zIndex = base; });
             setTopClass();
-
-            // Click to bring to front
             items.forEach(img => {
-                img.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    zCounter += 1;
-                    img.style.zIndex = zCounter;
-                    setTopClass();
-                });
+                img.addEventListener('click', (e) => { e.stopPropagation(); zCounter += 1; img.style.zIndex = zCounter; setTopClass(); });
             });
-
             function setTopClass() {
                 let topImg = null, topZ = -Infinity;
-                items.forEach(img => {
-                    const z = parseInt(getComputedStyle(img).zIndex, 10) || 0;
-                    if (z > topZ) { topZ = z; topImg = img; }
-                    img.classList.remove('is-top');
-                });
+                items.forEach(img => { const z = parseInt(getComputedStyle(img).zIndex, 10) || 0; if (z > topZ) { topZ = z; topImg = img; } img.classList.remove('is-top'); });
                 if (topImg) topImg.classList.add('is-top');
             }
+        })();
+    </script>
+
+    <!-- Flip controlled by button only -->
+    <script>
+        (function () {
+            const wrap = document.getElementById('beforeAfter');
+            const inner = wrap ? wrap.querySelector('.flip-inner') : null;
+            const button = document.getElementById('cleanBtn');
+            if (!wrap || !inner || !button) return;
+
+            let flipped = false;
+
+            function setFlipped(f) {
+                flipped = f;
+                inner.classList.toggle('is-flipped', flipped);
+                button.textContent = flipped ? 'MAKE IT DIRTY' : 'CLEAN ME!';
+                button.setAttribute('aria-pressed', String(flipped));
+            }
+
+            button.addEventListener('click', () => setFlipped(!flipped));
+            wrap.addEventListener('click', (e) => { e.stopPropagation(); });
+            setFlipped(false);
         })();
     </script>
 </body>
