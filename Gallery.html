@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Gallery | NitroRev Detailing</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+
+  <style>
+    @font-face {
+      font-family: 'MainFont';
+      src: url('fonts/edo.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    /* Layout base */
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    /* === Unified NAV (Sporty chevrons) === */
+    nav.site-nav {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      background: transparent;
+      padding: 0;
+      font-family: 'MainFont', Arial, sans-serif;
+      font-size: 3rem;
+      margin-top: 30px;
+    }
+
+    nav.site-nav a {
+      position: relative;
+      color: #fff;
+      text-decoration: none;
+      padding: 0 15px;
+      border: none !important;
+    }
+
+    nav.site-nav a::after {
+      content: "›";
+      position: absolute;
+      right: -18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #E10600;
+      font-size: 2rem;
+      text-shadow: 0 0 6px #E10600;
+    }
+
+    nav.site-nav a:last-child::after {
+      content: "";
+    }
+
+    nav.site-nav a:hover {
+      text-decoration: underline;
+      color: #E10600;
+    }
+
+    @media (max-width: 600px) {
+      nav.site-nav {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      nav.site-nav a::after {
+        display: none;
+      }
+    }
+
+    /* Brand image */
+    img.logo {
+      display: block;
+      margin: 0 auto;
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      padding: 0;
+    }
+
+    /****************************** Footer ***************************** */
+    footer {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      background: black;
+      color: #ccc;
+      text-align: center;
+      padding: 15px 0;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    .footer-icons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .footer-icons a svg {
+      width: 50px;
+      height: 50px;
+      fill: #ccc;
+      transition: fill 0.3s ease, filter 0.3s ease;
+    }
+
+    .footer-icons a:hover svg {
+      fill: #ffffff;
+      filter: drop-shadow(0 0 6px #ffffff);
+    }
+
+    /************* TV SLIDER (Comic TV) *****************/
+    :root {
+      --brand: #ff6a00;
+      /* NitroRev orange */
+      --ink: #000000;
+      /* outline color */
+      --paper: #fff5d6;
+      /* off-white paper */
+    }
+
+    /* Widen TV, keep responsive */
+    .tv-slider {
+      width: clamp(320px, 92vw, 1200px);
+      margin: 28px auto 60px;
+      user-select: none;
+    }
+
+    /* Hand-drawn comic frame */
+    .comic-frame {
+      position: relative;
+      background: var(--paper);
+      border-radius: 22px;
+      padding: 18px;
+      transform: rotate(-0.6deg);
+      box-shadow:
+        0 0 0 6px var(--ink),
+        8px 10px 0 0 var(--ink);
+    }
+
+    .comic-frame::after {
+      content: "";
+      position: absolute;
+      inset: -16px;
+      z-index: -1;
+      border-radius: 28px;
+      background-image: radial-gradient(rgba(0, 0, 0, .24) 1.1px, transparent 1.1px);
+      background-size: 7px 7px;
+      transform: rotate(-2deg);
+    }
+
+    /* Screen defaults to 16:9, JS will override to match current image */
+    .comic-screen {
+      position: relative;
+      overflow: hidden;
+      background: #0b0b0b;
+      border-radius: 18px;
+      aspect-ratio: 16/9;
+      box-shadow: inset 0 0 0 6px var(--ink), inset 0 0 60px rgba(0, 0, 0, .6);
+    }
+
+    /* Slides */
+    .slides {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      transition: transform .55s cubic-bezier(.22, .61, .36, 1);
+      touch-action: pan-y;
+    }
+
+    .slides img {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      padding: 8px;
+      box-sizing: border-box;
+      border-radius: 16px;
+      background: #000;
+      display: block;
+    }
+
+    /* Comic textures */
+    .ben-day {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(255, 255, 255, .08) 1.2px, transparent 1.2px);
+      background-size: 6px 6px;
+      mix-blend-mode: overlay;
+      opacity: .7;
+    }
+
+    .tv-static {
+      position: absolute;
+      inset: -4%;
+      opacity: 0;
+      pointer-events: none;
+      background: repeating-linear-gradient(0deg, #fff 0 2px, #000 2px 4px, #777 4px 6px);
+      filter: contrast(180%) brightness(120%);
+      transform: scale(1.02);
+    }
+
+    .action-lines {
+      position: absolute;
+      inset: -20%;
+      pointer-events: none;
+      opacity: 0;
+      background: conic-gradient(from 0deg, rgba(255, 255, 255, .18), rgba(255, 255, 255, 0) 30%);
+      mix-blend-mode: overlay;
+    }
+
+    /* Caption sticker */
+    .caption {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      font: 700 18px/1 'Bangers', Montserrat, sans-serif;
+      letter-spacing: .5px;
+      color: #000;
+      background: #ffe75c;
+      padding: 6px 10px 4px;
+      border-radius: 8px;
+      box-shadow: 0 0 0 3px var(--ink), 4px 4px 0 0 var(--ink);
+      transform: rotate(-2deg);
+    }
+
+    /* Comic sticker buttons */
+    .btn-blob {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
+      border: 3px solid var(--ink);
+      background: var(--brand);
+      color: #000;
+      font: 800 28px/1 'Bangers', system-ui;
+      cursor: pointer;
+      box-shadow: 3px 4px 0 0 var(--ink);
+    }
+
+    .btn-blob.prev {
+      left: -14px;
+      transform: translate(-30%, -50%) rotate(-6deg);
+    }
+
+    .btn-blob.next {
+      right: -14px;
+      transform: translate(30%, -50%) rotate(6deg);
+    }
+
+    .btn-blob:hover {
+      transform: translateY(-50%) scale(1.06);
+    }
+
+    .btn-blob:active {
+      transform: translateY(-50%) scale(.98);
+    }
+
+    /* Dots become mini panels */
+    .dots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin: 14px 0 0;
+    }
+
+    .dots button {
+      width: 14px;
+      height: 14px;
+      border: 3px solid var(--ink);
+      background: #fff;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 0 var(--ink);
+    }
+
+    .dots button[aria-selected="true"] {
+      background: var(--brand);
+    }
+
+    /* Transition effects */
+    @keyframes blast {
+      0% {
+        opacity: 0;
+        transform: scale(1.2) rotate(10deg);
+      }
+
+      30% {
+        opacity: .9;
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1) rotate(0);
+      }
+    }
+
+    .comic-screen.zap .action-lines {
+      animation: blast 280ms ease-out;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <img class="logo" src="Images/2_Transparent Background.png" alt="Nitro Rev Detailing">
+
+    <nav class="site-nav" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="Services.html">Services</a>
+      <a href="Gallery.html">Gallery</a>
+      <a href="Book.html">Book</a>
+      <a href="Contact.html">Contact</a>
+    </nav>
+
+    <!-- ===== Comic TV Panel Slider (Gallery) ===== -->
+    <div class="tv-slider comic" id="tvComic">
+      <div class="tv-body comic-frame">
+        <div class="tv-screen comic-screen">
+          <div class="ben-day" aria-hidden="true"></div>
+          <div class="action-lines" aria-hidden="true"></div>
+          <div class="tv-static" aria-hidden="true"></div>
+
+          <div class="slides">
+            <img src="Image Gallery/1.JPG" alt="1">
+             <img src="Image Gallery/2.JPG" alt="2">
+             <img src="Image Gallery/3.JPG" alt="3">
+             <img src="Image Gallery/4.JPG" alt="4">
+             <img src="Image Gallery/5.JPG" alt="5">
+
+             <img src="Image Gallery/6.JPG" alt="6">
+             <img src="Image Gallery/7.JPG" alt="7">
+             <img src="Image Gallery/8.JPG" alt="8">
+             <img src="Image Gallery/9.JPG" alt="9">
+             <img src="Image Gallery/10.JPG" alt="10">
+
+             <img src="Image Gallery/12.JPG" alt="12">
+             <img src="Image Gallery/13.JPG" alt="13">
+             
+          </div>
+
+          <div class="caption">CHANNEL <b id="capIndex">1</b>/<span id="capTotal">5</span></div>
+        </div>
+
+        <button class="btn-blob prev" aria-label="Previous">‹</button>
+        <button class="btn-blob next" aria-label="Next">›</button>
+      </div>
+
+      <div class="dots" role="tablist" aria-label="Panels"></div>
+    </div>
+    <!-- ===== Comic TV Panel Slider (Gallery) ===== -->
+
+    <script>
+      (function () {
+        const tv = document.getElementById('tvComic');
+        const slides = tv.querySelector('.slides');
+        const imgs = Array.from(slides.children);
+        const prev = tv.querySelector('.prev');
+        const next = tv.querySelector('.next');
+        const dotsWrap = tv.querySelector('.dots');
+        const staticFx = tv.querySelector('.tv-static');
+        const screen = tv.querySelector('.comic-screen');
+        const capIndex = tv.querySelector('#capIndex');
+        const capTotal = tv.querySelector('#capTotal');
+        capTotal.textContent = imgs.length;
+
+        let index = 0, startX = 0, currentX = 0, isDown = false, auto;
+
+        // Build dots
+        imgs.forEach((_, i) => {
+          const b = document.createElement('button');
+          b.setAttribute('role', 'tab');
+          b.setAttribute('aria-label', `Panel ${i + 1}`);
+          b.addEventListener('click', () => go(i, true));
+          dotsWrap.appendChild(b);
+        });
+
+        // Match screen aspect to current image
+        function setAspectFor(i) {
+          const img = imgs[i];
+          const apply = () => {
+            const w = img.naturalWidth || 16;
+            const h = img.naturalHeight || 9;
+            screen.style.aspectRatio = `${w} / ${h}`;
+          };
+          if (img.complete && img.naturalWidth) apply();
+          else img.addEventListener('load', apply, { once: true });
+        }
+
+        function fx() {
+          staticFx.animate([{ opacity: 0 }, { opacity: .85 }, { opacity: 0 }], { duration: 240, easing: 'ease-out' });
+          screen.classList.remove('zap'); void screen.offsetWidth; screen.classList.add('zap');
+        }
+
+        function go(i, user = false) {
+          index = (i + imgs.length) % imgs.length;
+          setAspectFor(index);
+
+          slides.style.transform = `translateX(-${index * 100}%)`;
+          dotsWrap.querySelectorAll('button').forEach((d, di) =>
+            d.setAttribute('aria-selected', di === index ? 'true' : 'false')
+          );
+          capIndex.textContent = index + 1;
+          fx();
+          if (user) resetAuto();
+        }
+
+        function nextSlide() { go(index + 1); }
+        function prevSlide() { go(index - 1); }
+
+        prev.addEventListener('click', prevSlide);
+        next.addEventListener('click', nextSlide);
+
+        // Swipe
+        slides.addEventListener('pointerdown', (e) => {
+          isDown = true; startX = e.clientX;
+          slides.setPointerCapture(e.pointerId);
+        });
+
+        slides.addEventListener('pointermove', (e) => {
+          if (!isDown) return;
+          currentX = e.clientX - startX;
+          slides.style.transform = `translateX(calc(-${index * 100}% + ${currentX}px))`;
+        });
+
+        slides.addEventListener('pointerup', () => {
+          if (!isDown) return; isDown = false;
+          const threshold = tv.clientWidth * 0.12;
+          if (currentX < -threshold) nextSlide();
+          else if (currentX > threshold) prevSlide();
+          else go(index);
+          currentX = 0;
+        });
+
+        // Keyboard
+        tv.tabIndex = 0;
+        tv.addEventListener('keydown', e => {
+          if (e.key === 'ArrowRight') nextSlide();
+          if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        function resetAuto() {
+          clearInterval(auto);
+          auto = setInterval(nextSlide, 6000);
+        }
+        resetAuto();
+
+        // Initialize
+        setAspectFor(0);
+        go(0);
+      })();
+    </script>
+  </main>
+
+  <footer>
+    <div class="footer-icons">
+      <!-- Email -->
+      <a href="mailto:nitrorevdetailing@gmail.com" aria-label="Email">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+          <path
+            d="M112 128C85.5 128 64 149.5
