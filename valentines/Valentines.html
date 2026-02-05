@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentines Day</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    .gradient-background {
+      background: linear-gradient(
+        180deg,
+        rgba(255, 208, 229, 1) 0%,
+        rgba(255, 232, 242, 1) 36%,
+        rgba(255, 255, 255, 1) 100%
+      );
+    }
+
+    .bounce2 {
+      animation: bounce2 2s ease infinite;
+    }
+
+    @keyframes bounce2 {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-20px); }
+      60% { transform: translateY(-10px); }
+    }
+
+    /* ✅ Make ALL images 50% smaller */
+    .half-size {
+      width: 50%;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+
+    #sliderImage {
+      transition: opacity 0.3s ease;
+    }
+  </style>
+</head>
+
+<body class="gradient-background flex flex-col min-h-screen">
+
+  <!-- MAIN CONTENT -->
+  <div class="flex-grow flex items-center justify-center">
+    <div class="flex flex-col items-center p-4">
+
+      <!-- MAIN IMAGE -->
+      <img
+        id="imageDisplay"
+        src="./images/image1.gif"
+        class="rounded-md half-size"
+        alt="Main Image"
+      />
+
+      <h2
+        id="valentineQuestion"
+        class="text-4xl font-bold italic text-[#bd1e59] my-4 text-center"
+      >
+        Will you be my Valentine?
+      </h2>
+
+      <div class="flex gap-4 pt-[20px] items-center" id="responseButtons">
+        <button
+          id="yesButton"
+          class="bounce2 px-4 py-2 bg-green-500 text-white rounded-md text-[20px] hover:bg-green-400 transition"
+        >
+          Yes
+        </button>
+
+        <button
+          id="noButton"
+          class="px-4 py-2 bg-red-500 text-white rounded-md text-[20px] hover:bg-red-700 transition"
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔻 BOTTOM IMAGE SLIDER -->
+  <div class="flex items-center justify-center gap-6 pb-10 px-4">
+    <button
+      id="prevSlide"
+      class="text-4xl px-4 hover:scale-110 transition select-none"
+      type="button"
+    >
+      ⬅️
+    </button>
+
+    <div class="w-[90%] max-w-[700px] flex items-center justify-center">
+      <img
+        id="sliderImage"
+        src="./slide/1.png"
+        class="half-size rounded-xl shadow-xl transition-opacity duration-300"
+        alt="Slider Image"
+      />
+    </div>
+
+    <button
+      id="nextSlide"
+      class="text-4xl px-4 hover:scale-110 transition select-none"
+      type="button"
+    >
+      ➡️
+    </button>
+  </div>
+
+  <!-- AUDIO -->
+  <audio id="yesSound" src="Celebrate.mp3" preload="auto"></audio>
+  <audio id="noSound" src="NoSound.mp3" preload="auto"></audio>
+
+  <!-- SCRIPT -->
+  <script type="module">
+    import confetti from "https://cdn.skypack.dev/canvas-confetti";
+
+    const yesButton = document.getElementById("yesButton");
+    const noButton = document.getElementById("noButton");
+    const imageDisplay = document.getElementById("imageDisplay");
+    const valentineQuestion = document.getElementById("valentineQuestion");
+    const responseButtons = document.getElementById("responseButtons");
+
+    const yesSound = document.getElementById("yesSound");
+    const noSound = document.getElementById("noSound");
+
+    const sliderImage = document.getElementById("sliderImage");
+    const prevSlide = document.getElementById("prevSlide");
+    const nextSlide = document.getElementById("nextSlide");
+
+    const imagePaths = [
+      "./images/image1.gif",
+      "./images/image2.gif",
+      "./images/image3.gif",
+      "./images/image4.gif",
+      "./images/image5.gif",
+      "./images/image6.gif",
+      "./images/image7.gif",
+    ];
+
+    const sliderImages = [
+      "./slide/1.png",
+      "./slide/2.png",
+      "./slide/4.png",
+      "./slide/5.png",
+    ];
+
+    let noClickCount = 0;
+    let sliderIndex = 0;
+
+    noButton.addEventListener("click", () => {
+      noSound.currentTime = 0;
+      noSound.play();
+
+      if (noClickCount < imagePaths.length - 1) {
+        noClickCount++;
+        imageDisplay.src = imagePaths[noClickCount];
+
+        const messages = [
+          "No",
+          "Are you sure?",
+          "Pookie please",
+          "Don't do this to me :(",
+          "You're breaking my heart",
+          "I'm gonna cry...",
+        ];
+
+        noButton.textContent = messages[noClickCount] || "No";
+      }
+    });
+
+    yesButton.addEventListener("click", () => {
+      yesSound.currentTime = 0;
+      yesSound.play();
+
+      imageDisplay.src = "./images/image7.gif";
+      valentineQuestion.textContent = "Yayyy!! :3";
+      responseButtons.style.display = "none";
+
+      confetti();
+    });
+
+    function updateSlide() {
+      sliderImage.style.opacity = 0;
+
+      setTimeout(() => {
+        sliderImage.src = sliderImages[sliderIndex];
+        sliderImage.onload = () => {
+          sliderImage.style.opacity = 1;
+        };
+      }, 150);
+    }
+
+    prevSlide.addEventListener("click", () => {
+      sliderIndex = (sliderIndex - 1 + sliderImages.length) % sliderImages.length;
+      updateSlide();
+    });
+
+    nextSlide.addEventListener("click", () => {
+      sliderIndex = (sliderIndex + 1) % sliderImages.length;
+      updateSlide();
+    });
+  </script>
+</body>
+</html>
